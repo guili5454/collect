@@ -136,5 +136,17 @@ Ajax的不足:
 - 开发和调试工具的缺乏
 
 ###$.bind()，$live()和$delegate()的区别
+bind() 是直接把处理程序绑定到各个元素上，它不能把处理程序绑定到还未存在于页面中的元素之上
+
+live() 是通过冒泡的方式来绑定到元素上,此live方法有一个非常大的缺点，那就是它仅能针对直接的CSS选择器做操作，这使得它变得非常的不灵活
+
+delegate()仅查找并保存$(document)元素，它速度快
 ###如何解决Ajax跨域问题
+1. iframe方法：这个适合同一主域名的二级域及主域名之间的相互访问。比如:www.a.com和blog.a.com之间的ajax交互，在两个域下的页面都加上document.domain = "a.com"就可以了。
+
+2. 两个完全不同域名下的互访，可以利用iframe的hash属性来调用，本方法有一定局限性，不做多介绍，更多的内容可以搜索一些参考资料看看。
+
+3. 通过中间桥梁过渡，也可以称为代理访问。比如www.a.com下一个test.html页面要访问www.b.com/data.rss数据，由于 data.rss在b.com域名下，在a下不能直接访问，但asp/php/jsp/.net等程序可以请求远程文件，这些后台程序就可以成为ajax 的桥梁了，我们先用后台动态程序请求远程数据，获取后再传递给test.html，由于这些后台程序和test.html在同一域名下，所以就可以直接访问了，跨域问题解决了。 
+
+4. 通过```<script```>标签来解决，此方法原理就是利用```<script></script>```可以调用跨域的js文件，比如www.a.com下的文件访问www.b.com下的js文件，```<script language="javascript" scr="http://www.b.com/data.js"></script>```，在b域名下的data.js就是充当数据源的，js里保存变量和数组，此js文件的主要功能就是传递数据，不做处理用
 ###cookie是什么？在使用cookie的时候有哪些需要注意的地方?
